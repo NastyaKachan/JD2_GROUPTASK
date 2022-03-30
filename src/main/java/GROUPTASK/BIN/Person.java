@@ -1,4 +1,4 @@
-package BIN;
+package GROUPTASK.BIN;
 
 import lombok.Getter;
 import lombok.Setter;
