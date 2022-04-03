@@ -5,7 +5,13 @@ import GroupTask.Bean.Person;
 public class JDBC {
 
     public static void main(String[] args) {
+
         PersonTDAO personDAO = new PersonTDAO();
-        personDAO.save(new Person(1, "Матвей", "Ненартович"));
+        //*personDAO.update(new Person(1,"Дмитрий","Басков"));
+        // personDAO.save(new Person(3, "Елена", "Малышева"));
+
+        personDAO.delete(new Person(3, "Елена", "Малышева"));
+        personDAO.select();
+
     }
 }

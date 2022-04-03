@@ -4,6 +4,7 @@ import GroupTask.Annotation.MyColumn;
 import GroupTask.Annotation.MyTable;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
