@@ -1,10 +1,9 @@
-package GroupTask.Bean;
+package by.jd2.grouptask.bean;
 
-import GroupTask.Annotation.MyColumn;
-import GroupTask.Annotation.MyTable;
+import by.jd2.grouptask.annotation.MyColumn;
+import by.jd2.grouptask.annotation.MyTable;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Setter
 @Getter
@@ -17,9 +16,21 @@ public class Person {
     @MyColumn("surname")
     private String surname;
 
+    public Person() {
+    }
+
     public Person(Integer id, String name, String surname) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
     }
 }

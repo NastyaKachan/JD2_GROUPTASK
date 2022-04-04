@@ -1,4 +1,4 @@
-package GroupTask.Annotation;
+package by.jd2.grouptask.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

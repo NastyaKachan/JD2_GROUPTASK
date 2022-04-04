@@ -1,4 +1,4 @@
-package GroupTask.util;
+package by.jd2.grouptask.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
