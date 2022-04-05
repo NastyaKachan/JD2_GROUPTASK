@@ -2,8 +2,11 @@ package by.jd2.grouptask.bean;
 
 import by.jd2.grouptask.annotation.MyColumn;
 import by.jd2.grouptask.annotation.MyTable;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Objects;
 
 @Setter
 @Getter
@@ -26,11 +29,11 @@ public class Person {
     }
 
     @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(id, person.id) && Objects.equals(name, person.name) && Objects.equals(surname, person.surname);
     }
+
 }

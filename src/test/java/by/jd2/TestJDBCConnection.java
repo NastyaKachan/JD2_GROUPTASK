@@ -6,12 +6,19 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
-public class TestJDBCConnection {
+public class TestJDBCConnection{
+
     @Test
-    public void connection() throws SQLException {
-        Connection result = JDBCConnection.getConnection();
-        assertNotNull(result);
+    public void when_mainDBConnection_then_returnConnection() throws SQLException {
+        Connection connection = new JDBCConnection().getConnection();
+        assertNotNull(connection);
+        assertFalse(connection.isClosed());
+        String expected = connection.getMetaData().getURL();
+        String actual = "jdbc:h2:mem:test";
+        assertEquals(expected, actual);
+        connection.close();
+        assertTrue(connection.isClosed());
     }
 }

@@ -2,7 +2,7 @@ package by.jd2.grouptask.service;
 
 import java.sql.SQLException;
 
-public interface TDAO<T> {
+public interface DAO<T> {
 
     void save(T t);
 

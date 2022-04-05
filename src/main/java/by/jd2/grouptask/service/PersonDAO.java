@@ -10,12 +10,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PersonTDAO implements TDAO<Person> {
+public class PersonDAO implements DAO<Person> {
+
+    private final JDBCConnection jdbcConnection;
+
+    public PersonDAO(JDBCConnection jdbcConnection) {
+        this.jdbcConnection = jdbcConnection;
+    }
+
     @Override
     public void save(Person person) {
         String table = person.getClass().getAnnotation(MyTable.class).value();
         String sql = "INSERT INTO " + table + " (id,name,surname) values (?,?,?)";
-        try (Connection connection = JDBCConnection.getConnection();
+        try (Connection connection = jdbcConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             connection.setAutoCommit(false);
@@ -33,15 +40,14 @@ public class PersonTDAO implements TDAO<Person> {
     @Override
     public Person selectById(int id) {
         String sql = "SELECT * FROM person WHERE id = ?";
-        Person person = new Person();
-        try (Connection connection = JDBCConnection.getConnection();
+        Person person = null;
+        try (Connection connection = jdbcConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-
             connection.setAutoCommit(false);
-
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
+                    person = new Person();
                     person.setId(resultSet.getInt(1));
                     person.setName(resultSet.getString(2));
                     person.setSurname(resultSet.getString(3));
@@ -57,8 +63,8 @@ public class PersonTDAO implements TDAO<Person> {
     @Override
     public void update(Person person) {
         String table = person.getClass().getAnnotation(MyTable.class).value();
-        String sql = "UPDATE " + table + " SET name = ? , surname = ? WHERE id =? ";
-        try (Connection connection = JDBCConnection.getConnection();
+        String sql = "UPDATE " + table + " SET name = ? , surname = ? WHERE id = ?";
+        try (Connection connection = jdbcConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             connection.setAutoCommit(false);
@@ -77,10 +83,10 @@ public class PersonTDAO implements TDAO<Person> {
     public void delete(Person person) {
         String table = person.getClass().getAnnotation(MyTable.class).value();
         String sql = "DELETE FROM " + table + " WHERE id = ?";
-        try (Connection connection = JDBCConnection.getConnection()) {
+        try (Connection connection = jdbcConnection.getConnection()) {
             connection.setAutoCommit(false);
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1,ReflectBean.getFieldValue("id", person));
+            statement.setInt(1, ReflectBean.getFieldValue("id", person));
             statement.executeUpdate();
             connection.commit();
             statement.close();
