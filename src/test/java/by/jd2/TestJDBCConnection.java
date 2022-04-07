@@ -16,7 +16,7 @@ public class TestJDBCConnection{
         assertNotNull(connection);
         assertFalse(connection.isClosed());
         String expected = connection.getMetaData().getURL();
-        String actual = "jdbc:h2:mem:test";
+        String actual = "jdbc:h2:~/MYDATABASE";
         assertEquals(expected, actual);
         connection.close();
         assertTrue(connection.isClosed());
